@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Remain</title>
+
+  <link
+    rel="stylesheet"
+    href="/style.css"
+  >
+
+</head>
+
+
+<body>
+
+  <!-- ============================
+       登录页面
+       ============================ -->
+
+  <div
+    id="login-page"
+    class="page login-page"
+  >
+
+    <div class="login-card">
+
+      <h1>Remain</h1>
+
+      <p class="login-subtitle">
+        Administrator Login
+      </p>
+
+      <form
+        id="login-form"
+        novalidate
+      >
+
+        <div class="form-group">
+
+          <label for="login-password">
+            Admin Password
+          </label>
+
+          <input
+            id="login-password"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
+
+        </div>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Login
+        </button>
+
+        <div
+          id="login-error"
+          class="form-error"
+        ></div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================
+       主页面
+       ============================ -->
+
+  <div
+    id="app-page"
+    class="page app-page hidden"
+  >
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+
+        <h1>Remain</h1>
+
+      </div>
+
+      <div class="topbar-right">
+
+        <button
+          id="logout-button"
+          class="secondary-button"
+          type="button"
+        >
+          退出登录
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="main-container">
+
+
+      <!-- ============================
+           创建任务
+           ============================ -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              创建任务
+            </h2>
+
+            <p>
+              设置网站访问任务
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <form id="create-task-form">
+
+          <div class="form-grid">
+
+
+            <div class="form-group">
+
+              <label for="task-name">
+                任务名称
+              </label>
+
+              <input
+                id="task-name"
+                type="text"
+                placeholder="例如：每日网站访问"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="task-url">
+                目标网址
+              </label>
+
+              <input
+                id="task-url"
+                type="url"
+                placeholder="https://example.com"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="task-interval">
+                执行间隔（分钟）
+              </label>
+
+              <input
+                id="task-interval"
+                type="number"
+                min="1"
+                step="1"
+                value="5"
+                required
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="task-stay">
+                停留时间（秒）
+              </label>
+
+              <input
+                id="task-stay"
+                type="number"
+                min="0"
+                step="1"
+                value="10"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="submit"
+              class="primary-button"
+            >
+              创建任务
+            </button>
+
+          </div>
+
+
+          <div
+            id="create-task-message"
+            class="form-message"
+          ></div>
+
+        </form>
+
+      </section>
+
+
+
+      <!-- ============================
+           任务列表
+           ============================ -->
+
+      <section class="panel">
+
+        <div class="panel-header task-list-header">
+
+          <div>
+
+            <h2 id="tasks-title">
+              任务列表（共 0 个任务）
+            </h2>
+
+          </div>
+
+
+          <button
+            id="refresh-tasks-button"
+            type="button"
+            class="secondary-button"
+          >
+            刷新
+          </button>
+
+        </div>
+
+
+        <div
+          id="tasks-container"
+          class="tasks-container"
+        >
+
+          <div class="empty-state">
+            暂无任务
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+
+      <!-- ============================
+           数据库同步
+           ============================ -->
+
+      <section class="panel database-sync-panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              数据库同步
+            </h2>
+
+            <p>
+              数据库同步状态
+            </p>
+
+          </div>
+
+
+          <span
+            id="database-sync-status"
+            class="status-off"
+          >
+            未运行
+          </span>
+
+        </div>
+
+
+        <div
+          id="database-sync-container"
+          class="database-sync-container"
+        >
+
+
+          <div class="database-sync-item">
+
+            <span class="database-sync-label">
+              同步间隔
+            </span>
+
+            <span
+              id="database-sync-interval"
+              class="database-sync-value"
+            >
+              暂无
+            </span>
+
+          </div>
+
+
+          <div class="database-sync-item">
+
+            <span class="database-sync-label">
+              上次同步
+            </span>
+
+            <span
+              id="database-sync-last"
+              class="database-sync-value"
+            >
+              暂无
+            </span>
+
+          </div>
+
+
+          <div class="database-sync-item">
+
+            <span class="database-sync-label">
+              下次同步
+            </span>
+
+            <span
+              id="database-sync-next"
+              class="database-sync-value"
+            >
+              暂无
+            </span>
+
+          </div>
+
+
+          <div class="database-sync-item">
+
+            <span class="database-sync-label">
+              同步结果
+            </span>
+
+            <span
+              id="database-sync-result"
+              class="database-sync-value database-sync-result-empty"
+            >
+              暂无
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+
+
+
+      <!-- ============================
+           日志
+           ============================ -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              运行日志
+            </h2>
+
+            <p>
+              最多保留 200 条日志
+            </p>
+
+          </div>
+
+
+          <button
+            id="clear-logs-button"
+            type="button"
+            class="secondary-button"
+          >
+            清空日志
+          </button>
+
+        </div>
+
+
+        <div
+          id="logs-container"
+          class="logs-container"
+        >
+
+          <div class="empty-state">
+            暂无日志
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ============================
+       编辑任务弹窗
+       ============================ -->
+
+  <div
+    id="edit-task-modal"
+    class="modal hidden"
+  >
+
+    <div
+      id="edit-modal-backdrop"
+      class="modal-backdrop"
+    ></div>
+
+
+    <div class="modal-dialog">
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>
+            编辑任务
+          </h2>
+
+          <p>
+            修改任务设置，不会改变任务 ID
+          </p>
+
+        </div>
+
+
+        <button
+          id="close-edit-task-button"
+          type="button"
+          class="modal-close-button"
+          aria-label="关闭"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="edit-task-form">
+
+        <input
+          id="edit-task-id"
+          type="hidden"
+        >
+
+
+        <div class="form-group">
+
+          <label for="edit-task-name">
+            任务名称
+          </label>
+
+          <input
+            id="edit-task-name"
+            type="text"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-task-url">
+            目标网址
+          </label>
+
+          <input
+            id="edit-task-url"
+            type="url"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-task-interval">
+            执行间隔（分钟）
+          </label>
+
+          <input
+            id="edit-task-interval"
+            type="number"
+            min="1"
+            step="1"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="edit-task-stay">
+            停留时间（秒）
+          </label>
+
+          <input
+            id="edit-task-stay"
+            type="number"
+            min="0"
+            step="1"
+            required
+          >
+
+        </div>
+
+
+        <div
+          id="edit-task-message"
+          class="form-message"
+        ></div>
+
+
+        <div class="modal-actions">
+
+          <button
+            id="cancel-edit-task-button"
+            type="button"
+            class="secondary-button"
+          >
+            取消
+          </button>
+
+
+          <button
+            type="submit"
+            class="primary-button"
+          >
+            保存修改
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <script src="/app.js"></script>
+
+</body>
+
+</html>
