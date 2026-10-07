@@ -1,0 +1,12 @@
+services:
+  remain:
+    build: .
+    container_name: remain
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      PORT: 3000
+      DATA_DIR: /tmp/remain-data
