@@ -5,7 +5,9 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Chromium 有头模式需要虚拟显示器
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
     xvfb \
     fluxbox \
     dbus-x11 \
