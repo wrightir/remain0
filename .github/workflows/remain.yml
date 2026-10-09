@@ -46,8 +46,8 @@ jobs:
           push: true
 
           tags: |
-            ghcr.io/${{ steps.lower-repo.outputs.repository }}/remain:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/remain:latest
+            ghcr.io/${{ steps.lower-repo.outputs.repository }}/remain1:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/remain1:latest
 
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
